@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,6 +13,14 @@ export default function AdministracaoRestaurantes() {
         .then(response => setRestaurantes(response.data));
     },[])
 
+    function excluir(id: Number) {
+        axios.delete(`http://localhost:8000/api/v2/restaurantes/${id}/`)
+        .then(() => {
+            const listaRestaurantes = restaurantes.filter(restaurante => restaurante.id !== id);
+            setRestaurantes([...listaRestaurantes]);
+        })
+    }
+
     return <>
         <TableContainer component={Paper}>
             <Table>
@@ -24,6 +32,9 @@ export default function AdministracaoRestaurantes() {
                         <TableCell>
                             Editar
                         </TableCell>
+                        <TableCell>
+                            Excluir
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -34,6 +45,11 @@ export default function AdministracaoRestaurantes() {
                             </TableCell>
                             <TableCell>
                                 [<Link to={`/admin/restaurantes/${restaurante.id}`}>editar</Link>]
+                            </TableCell>
+                            <TableCell>
+                                <Button variant="outlined" color="error" onClick={() => excluir(restaurante.id)}>
+                                    Excluir
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}
