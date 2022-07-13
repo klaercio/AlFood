@@ -1,7 +1,9 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import http from "../../../http";
 import IRestaurante from "../../../interfaces/IRestaurante";
 
 export default function NovoRestaurante() {
@@ -23,21 +25,24 @@ export default function NovoRestaurante() {
         evento.preventDefault();
 
         if(parametro.id) {
-            axios.put(`http://127.0.0.1:8000/api/v2/restaurantes/${parametro.id}/`, {nome : restaurante})
-            .then(()=> alert('usuario editado com sucesso'));
+            http.put(`restaurantes/${parametro.id}/`, {nome : restaurante})
+            .then(()=> alert('restaurante editado com sucesso!!'));
             return;
         }
 
-        axios.post('http://localhost:8000/api/v2/restaurantes/', {nome : restaurante})
+        http.post('restaurantes/', {nome : restaurante})
         .then(()=> (
             alert('restaurante cadastrado com sucesso!!')
         ))
     }
 
     return (
-        <form onSubmit={aoSubmit}>
-            <TextField id="standard-basic" value={restaurante} onChange={evento => setRestaurante(evento.target.value)} label="Nome do Restaurante" />
-            <Button type="submit" variant="outlined">Salvar</Button>
-        </form>
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems:"center"}}>
+            <Typography component="h1" variant="h6">Formulário de restaurantes</Typography>
+            <Box component="form" onSubmit={aoSubmit}>
+                <TextField id="standard-basic" value={restaurante} onChange={evento => setRestaurante(evento.target.value)} label="Nome do Restaurante" fullWidth required/>
+                <Button sx={{marginTop: 1}}type="submit" variant="outlined" fullWidth>Salvar</Button>
+            </Box>
+        </Box>
     );
 }
