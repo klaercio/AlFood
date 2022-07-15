@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import NovoRestaurante from './paginas/Administracao/NovoRestaurante';
+import AdministracaoPratos from './paginas/Administracao/Pratos';
 import AdministracaoRestaurantes from './paginas/Administracao/Restaurantes';
 import PaginaBaseAdmin from './paginas/Administracao/Restaurantes/PaginaBaseAdmin';
 import Home from './paginas/Home';
@@ -17,6 +18,7 @@ function App() {
         <Route path="restaurantes" element={<AdministracaoRestaurantes />} />
         <Route path="restaurantes/novo" element={<NovoRestaurante />} />
         <Route path="restaurantes/:id" element={<NovoRestaurante />} />
+        <Route path="pratos" element={<AdministracaoPratos/>} />
       </Route>
     </Routes>
   );
